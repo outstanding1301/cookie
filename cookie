@@ -1,0 +1,36 @@
+#!/bin/bash
+if [[ -n "$1" ]]; then
+  repeat=$1
+else
+  repeat=1
+fi
+
+if [[ -n "$2" ]]; then
+  sleeptime=$(echo "scale=2 ; 0.1 / $2" | bc)
+else
+  sleeptime=0.1
+fi
+
+lines=("내가 만든 쿠키" "너를 위해 구웠지" "but you know that it ain't for free" "yeah" "내가 만든 쿠키" "너무 부드러우니" "(what?)" "자꾸만 떠오르니" "(ayy)")
+mulgyeols=(45 15 20 5 45 15 5 20 5)
+function cookie() {
+  local str=$1
+  for (( i=0; i<${#str}; i++ )); do
+    echo -n "${str:$i:1}"
+    sleep "$sleeptime"
+  done
+}
+
+for i in $(eval echo "{1..$repeat}");
+do
+  for j in "${!lines[@]}";
+  do
+    cookie "${lines[j]}"
+    for i in $(eval echo "{1..${mulgyeols[j]}}");
+    do
+      echo -n "~"
+    sleep "$sleeptime"
+    done
+    echo
+  done
+done
